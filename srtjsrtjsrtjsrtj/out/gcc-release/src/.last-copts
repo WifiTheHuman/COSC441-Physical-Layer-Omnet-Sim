@@ -1,0 +1,1 @@
+-O3 -DNDEBUG=1   -MMD -MP -MF .d  -fPIC  -fno-omit-frame-pointer -DHAVE_SWAPCONTEXT -DWITH_MPI -DPREFER_QTENV -DWITH_QTENV -DWITH_PARSIM -DWITH_NETBUILDER -DWITH_OSG -DWITH_OSGEARTH    -I/home/cosc/student/yma82/Downloads/omnetpp-6.0pre8/include

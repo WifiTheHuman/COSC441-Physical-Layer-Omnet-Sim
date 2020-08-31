@@ -70,4 +70,3 @@ network physicalLayer
         Tx.out --> {  delay = 100ms; } --> Chan.in;
         Chan.out --> {  delay = 100ms; } --> Rx.in;
 }
-
