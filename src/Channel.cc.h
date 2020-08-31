@@ -28,6 +28,17 @@ class Channel_cc : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+
+  private:
+    double* nodeDistance;
+    double* pathLossExponent;
+    double* txPowerDBm;
+    double* bitRate;
+    double* noisePowerDBm;
+    double* transProbGoodGood;
+    double* transProbBadBad;
+    double* channelGainGoodDB;
+    double* channelGainBadDB;
 };
 
 #endif

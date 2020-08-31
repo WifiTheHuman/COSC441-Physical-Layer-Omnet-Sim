@@ -23,9 +23,11 @@ class Channel : public cSimpleModule
 
 public:
 
-private:
+protected:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
+
+private:
     double* nodeDistance = new double;
     double* pathLossExponent = new double;
     double* txPowerDBm = new double;
@@ -41,26 +43,36 @@ Define_Module(Channel_cc);
 
 void Channel_cc::initialize()
 {
-    cout<<"Channel initialising, nodeDistance = "<<*nodeDistance;
-    cout<<"Channel initialising, pathLossExponent = "<<*pathLossExponent;
-    cout<<"Channel initialising, txPowerDBm = "<<*txPowerDBm;
-    cout<<"Channel initialising, bitRate = "<<*bitRate;
-    cout<<"Channel initialising, noisePowerDBm = "<<*noisePowerDBm;
-    cout<<"Channel initialising, transProbGoodGood = "<<*transProbGoodGood;
-    cout<<"Channel initialising, transProbBadBad = "<<*transProbBadBad;
-    cout<<"Channel initialising, channelGainGoodDB = "<<*channelGainGoodDB;
-    cout<<"Channel initialising, channelGainBadDB = "<<*channelGainBadDB;
+    *nodeDistance = par("nodeDistance");
+    *pathLossExponent = par("pathLossExponent");
+    *txPowerDBm = par("txPowerDBm");
+    *bitRate = par("bitRate");
+    *noisePowerDBm = par("noisePowerDBm");
+    *transProbGoodGood = par("transProbGoodGood");
+    *transProbBadBad = par("transProbBadBad");
+    *channelGainGoodDB = par("channelGainGoodDB");
+    *channelGainBadDB = par("channelGainBadDB");
+
+    std::cout<<"Channel initialising, nodeDistance = "<<*nodeDistance;
+    std::cout<<"Channel initialising, pathLossExponent = "<<*pathLossExponent;
+    std::cout<<"Channel initialising, txPowerDBm = "<<*txPowerDBm;
+    std::cout<<"Channel initialising, bitRate = "<<*bitRate;
+    std::cout<<"Channel initialising, noisePowerDBm = "<<*noisePowerDBm;
+    std::cout<<"Channel initialising, transProbGoodGood = "<<*transProbGoodGood;
+    std::cout<<"Channel initialising, transProbBadBad = "<<*transProbBadBad;
+    std::cout<<"Channel initialising, channelGainGoodDB = "<<*channelGainGoodDB;
+    std::cout<<"Channel initialising, channelGainBadDB = "<<*channelGainBadDB;
 }
 
 void Channel_cc::handleMessage(cMessage *msg)
 {
-    cout<<"Channel initialising, nodeDistance = "<<*nodeDistance;
-        cout<<"Channel handling message, pathLossExponent = "<<*pathLossExponent;
-        cout<<"Channel handling message, txPowerDBm = "<<*txPowerDBm;
-        cout<<"Channel handling message, bitRate = "<<*bitRate;
-        cout<<"Channel handling message, noisePowerDBm = "<<*noisePowerDBm;
-        cout<<"Channel handling message, transProbGoodGood = "<<*transProbGoodGood;
-        cout<<"Channel handling message, transProbBadBad = "<<*transProbBadBad;
-        cout<<"Channel handling message, channelGainGoodDB = "<<*channelGainGoodDB;
-        cout<<"Channel handling message, channelGainBadDB = "<<*channelGainBadDB;
+    std::cout<<"Channel handling message, nodeDistance = "<<*nodeDistance;
+    std::cout<<"Channel handling message, pathLossExponent = "<<*pathLossExponent;
+    std::cout<<"Channel handling message, txPowerDBm = "<<*txPowerDBm;
+    std::cout<<"Channel handling message, bitRate = "<<*bitRate;
+    std::cout<<"Channel handling message, noisePowerDBm = "<<*noisePowerDBm;
+    std::cout<<"Channel handling message, transProbGoodGood = "<<*transProbGoodGood;
+    std::cout<<"Channel handling message, transProbBadBad = "<<*transProbBadBad;
+    std::cout<<"Channel handling message, channelGainGoodDB = "<<*channelGainGoodDB;
+    std::cout<<"Channel handling message, channelGainBadDB = "<<*channelGainBadDB;
 }

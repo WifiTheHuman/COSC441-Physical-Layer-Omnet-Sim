@@ -20,6 +20,9 @@ package _441assignment1;
 //
 simple Transmitter_cc
 {
+    parameters:
+        int numberOverheadBits;
+    	int NumberUserBits;
     gates:
         input in;
         output out;
@@ -27,6 +30,9 @@ simple Transmitter_cc
 
 simple Receiver_cc
 {
+    parameters:
+        bool errorFlag;
+    	double PLProb_Q;
     gates:
         input in;
         output out;
@@ -34,6 +40,16 @@ simple Receiver_cc
 
 simple Channel_cc
 {
+    parameters:
+        double nodeDistance;
+        double pathLossExponent;
+        double txPowerDBm;
+        double bitRate;
+        double noisePowerDBm;
+        double transProbGoodGood;
+        double transProbBadBad;
+        double channelGainGoodDB;
+        double channelGainBadDB;
     gates:
         input in;
         output out;

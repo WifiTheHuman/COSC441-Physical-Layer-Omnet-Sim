@@ -39,18 +39,19 @@ Define_Module(Transmitter_cc);
 
 void Transmitter_cc::initialize()
 {
-
-    cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
-    cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
+    *numberOverheadBits = par("numberOverheadBits");
+    *NumberUserBits = par("NumberUserBits");
+    std::cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
+    std::cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
 
 
 
 }
 
-void Transmitter_cc::handleMessage(PacketMessage *msg)
+void Transmitter_cc::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
-    cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
-    cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
+    std::cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
+    std::cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
 
 }

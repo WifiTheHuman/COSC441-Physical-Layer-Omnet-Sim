@@ -28,6 +28,9 @@ class Receiver_cc : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+  private:
+    bool* errorFlag;
+    double* PLProb_Q;
 };
 
 #endif

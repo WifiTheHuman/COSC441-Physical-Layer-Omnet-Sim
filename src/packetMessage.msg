@@ -16,10 +16,10 @@
 //
 // TODO generated message class
 //
-packet PacketMessage {
-    int ovhdBits;
-    int userBits;
-    bool errorFlag = false;
-    
-	int sequenceNumber;
-}
+//packet PacketMessage {
+//    int ovhdBits;
+//    int userBits;
+//    bool errorFlag = false;
+//    
+//	int sequenceNumber;
+//}

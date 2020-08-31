@@ -28,19 +28,21 @@ private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
     bool* errorFlag = new bool;
-    double* PLProb_Q new double;
+    double* PLProb_Q = new double;
 };
 
 Define_Module(Receiver_cc);
 
 void Receiver_cc::initialize()
 {
-    cout<<"Receiver initialising, errorFlag = "<<*errorFlag;
-    cout<<"\nReceiver initialising, PLProb_Q = "<<*PLProb_Q;
+    *errorFlag = par("errorFlag");
+    *PLProb_Q = par("PLProb_Q");
+    std::cout<<"Receiver initialising, errorFlag = "<<*errorFlag;
+    std::cout<<"\nReceiver initialising, PLProb_Q = "<<*PLProb_Q;
 }
 
-void Receiver_cc::handleMessage(PacketMessage *msg)
+void Receiver_cc::handleMessage(cMessage *msg)
 {
-    cout<<"Receiver handling message, errorFlag = "<<*errorFlag;
-    cout<<"\nReceiver handling message, PLProb_Q = "<<*PLProb_Q;
+    std::cout<<"Receiver handling message, errorFlag = "<<*errorFlag;
+    std::cout<<"\nReceiver handling message, PLProb_Q = "<<*PLProb_Q;
 }
