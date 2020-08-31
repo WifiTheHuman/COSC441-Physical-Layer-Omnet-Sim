@@ -14,8 +14,11 @@
 // 
 
 #include "Channel.cc.h"
+#include <string.h>
+#include <omnetpp.h>
+#include <iostream>
 
-class Transmitter : public cSimpleModule
+class Channel : public cSimpleModule
 {
 
 public:

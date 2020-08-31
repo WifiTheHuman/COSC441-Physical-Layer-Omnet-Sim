@@ -16,6 +16,7 @@
 #include "Transmitter.cc.h"
 #include <string.h>
 #include <omnetpp.h>
+#include <iostream>
 
 using namespace omnetpp;
 
@@ -30,14 +31,17 @@ public:
 private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
-    int numberOverheadBits;
-    int NumberUserBits;
+    int* numberOverheadBits = new int;
+    int* NumberUserBits = new int;
 };
 
 Define_Module(Transmitter_cc);
 
 void Transmitter_cc::initialize()
 {
+
+    cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
+    cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
 
 
 
@@ -46,4 +50,7 @@ void Transmitter_cc::initialize()
 void Transmitter_cc::handleMessage(PacketMessage *msg)
 {
     // TODO - Generated method body
+    cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
+    cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
+
 }

@@ -16,6 +16,7 @@
 #include "Receiver.cc.h"
 #include <string.h>
 #include <omnetpp.h>
+#include <iostream>
 
 using namespace omnetpp;
 
@@ -26,18 +27,20 @@ public:
 private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
-    int errorFlag;
-    double PLProb_Q;
+    bool* errorFlag = new bool;
+    double* PLProb_Q new double;
 };
 
 Define_Module(Receiver_cc);
 
 void Receiver_cc::initialize()
 {
-    // TODO - Generated method body
+    cout<<"Receiver initialising, errorFlag = "<<*errorFlag;
+    cout<<"\nReceiver initialising, PLProb_Q = "<<*PLProb_Q;
 }
 
 void Receiver_cc::handleMessage(PacketMessage *msg)
 {
-    // TODO - Generated method body
+    cout<<"Receiver handling message, errorFlag = "<<*errorFlag;
+    cout<<"\nReceiver handling message, PLProb_Q = "<<*PLProb_Q;
 }
