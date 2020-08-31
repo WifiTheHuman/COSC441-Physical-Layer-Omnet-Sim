@@ -14,6 +14,21 @@
 // 
 
 #include "Receiver.cc.h"
+#include <string.h>
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+class Receiver : public cSimpleModule
+{
+
+public:
+private:
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    int errorFlag;
+    double PLProb_Q;
+};
 
 Define_Module(Receiver_cc);
 
@@ -22,7 +37,7 @@ void Receiver_cc::initialize()
     // TODO - Generated method body
 }
 
-void Receiver_cc::handleMessage(cMessage *msg)
+void Receiver_cc::handleMessage(PacketMessage *msg)
 {
     // TODO - Generated method body
 }

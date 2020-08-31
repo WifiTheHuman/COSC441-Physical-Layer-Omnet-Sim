@@ -18,6 +18,39 @@ package _441assignment1;
 //
 // TODO auto-generated module
 //
+simple Transmitter_cc
+{
+    gates:
+        input in;
+        output out;
+}
+
 simple Receiver_cc
 {
+    gates:
+        input in;
+        output out;
+}
+
+simple Channel_cc
+{
+    gates:
+        input in;
+        output out;
+}
+
+network physicalLayer
+{
+    @display("bgb=308,87");
+    submodules:
+        Tx: Transmitter_cc;
+        Rx: Receiver_cc {
+            @display("p=249,30");
+        }
+        Chan: Channel_cc {
+            @display("p=143,30");
+        }
+    connections:
+        Tx.out --> {  delay = 100ms; } --> Chan.in;
+        Chan.in <-- {  delay = 100ms; } <-- Rx.out;
 }

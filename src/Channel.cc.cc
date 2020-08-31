@@ -15,6 +15,25 @@
 
 #include "Channel.cc.h"
 
+class Transmitter : public cSimpleModule
+{
+
+public:
+
+private:
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    double nodeDistance;
+    double pathLossExponent;
+    double txPowerDBm;
+    double bitRate;
+    double noisePowerDBm;
+    double transProbGoodGood;
+    double transProbBadBad;
+    double channelGainGoodDB;
+    double channelGainBadDB
+};
+
 Define_Module(Channel_cc);
 
 void Channel_cc::initialize()

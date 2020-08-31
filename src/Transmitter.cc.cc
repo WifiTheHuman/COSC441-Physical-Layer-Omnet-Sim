@@ -23,10 +23,10 @@ class Transmitter : public cSimpleModule
 {
 
 public:
-    void setNumberOverheadBits(int ovhBits);
-    void setNumberUserBits(int ovhBits);
-    int getNumberOverheadBits();
-    int getNumberUserBits();
+//    void setNumberOverheadBits(int ovhBits);
+//    void setNumberUserBits(int ovhBits);
+//    int getNumberOverheadBits();
+//    int getNumberUserBits();
 private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
@@ -43,7 +43,7 @@ void Transmitter_cc::initialize()
 
 }
 
-void Transmitter_cc::handleMessage(cMessage *msg)
+void Transmitter_cc::handleMessage(PacketMessage *msg)
 {
     // TODO - Generated method body
 }
