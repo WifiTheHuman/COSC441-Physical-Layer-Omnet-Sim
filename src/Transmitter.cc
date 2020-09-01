@@ -46,16 +46,15 @@ void Transmitter_cc::initialize()
 
     EV << "Initialising transmitter!\n";
 
-    //std::cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
-    //std::cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
+    EV << "Number of overhead bits = "<<*numberOverheadBits<<"\n";
+    EV << "Number of user bits = "<<*NumberUserBits<<"\n";
+
 }
 
 void Transmitter_cc::handleMessage(cMessage *msg)
 {
     //Occurs when the transmitter receives a message
     //Deletes received message, generates packet record and sends to out gate
-    //std::cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
-    //std::cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
 
     EV << "Transmitter received message!\n";
 
@@ -73,6 +72,5 @@ void Transmitter_cc::handleMessage(cMessage *msg)
     //myPacket->setSequenceNumber(1);
 
     send(myPacket, "out");
-    //std::cout<<"\nTransmitter sending message";
     EV << "Transmitter packet record sent!\n";
 }

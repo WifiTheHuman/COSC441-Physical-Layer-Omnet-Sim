@@ -17,6 +17,7 @@
 #define ___441ASSIGNMENT1_RECEIVER_CC_H_
 
 #include <omnetpp.h>
+#include "packetRecord_m.h"
 
 using namespace omnetpp;
 
@@ -27,10 +28,10 @@ class Receiver_cc : public cSimpleModule
 {
   protected:
     virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
+    virtual void handleMessage(packetRecord *msg);
   private:
-    bool* errorFlag;
-    double* PLProb_Q;
+    cStdDev* errorFlagCollection;
+    double* Q;
 };
 
 #endif

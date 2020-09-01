@@ -16,9 +16,6 @@
 package attempt69;
 simple Receiver_cc
 {
-    parameters:
-        bool errorFlag;
-        double PLProb_Q;
     gates:
         input in;
         output out;

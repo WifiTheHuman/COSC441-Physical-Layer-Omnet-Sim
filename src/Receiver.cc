@@ -28,23 +28,37 @@ class Receiver : public cSimpleModule
 public:
 private:
     virtual void initialize() override;
-    virtual void handleMessage(cMessage *msg) override;
-    bool* errorFlag = new bool;
-    double* PLProb_Q = new double;
+    virtual void handleMessage(packetRecord *msg);
+
+    cStdDev* errorFlagCollection = new cStdDev;
+    double* Q = new double;
 };
 
 Define_Module(Receiver_cc);
 
 void Receiver_cc::initialize()
 {
-    *errorFlag = par("errorFlag");
-    *PLProb_Q = par("PLProb_Q");
-    //std::cout<<"Receiver initialising, errorFlag = "<<*errorFlag;
-    //std::cout<<"\nReceiver initialising, PLProb_Q = "<<*PLProb_Q;
+    //Initialises receiver at start of simulation
+    EV << "Initialising Receiver!\n";
+
 }
 
-void Receiver_cc::handleMessage(cMessage *msg)
+void Receiver_cc::handleMessage(packetRecord *msg)
 {
-    //std::cout<<"Receiver handling message, errorFlag = "<<*errorFlag;
-    //std::cout<<"\nReceiver handling message, PLProb_Q = "<<*PLProb_Q;
+    EV << "Receiver processing packet record!\n";
+
+    if (msg->getErrorFlag() == true){
+        EV << "Packet record contains error!\n";
+        errorFlagCollection->collect(1.0);
+    }
+    else if (msg->getErrorFlag() == false){
+        EV << "Packet record is error free!\n";
+        errorFlagCollection->collect(0.0);
+    }
+    else{
+        EV << "Warning: unexpected behavior for getErrorFlag called by receiver\n";
+    }
+
+    EV << "Current mean: " << errorFlagCollection->getMean() << "\n";
+
 }
