@@ -1,6 +1,3 @@
-package attempt69;
-
-@license(LGPL);
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -15,24 +12,15 @@ package attempt69;
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
-//
-// TODO auto-generated module
-//
 
-network physicalLayer
+package attempt69;
+
+simple Transmitter_cc
 {
-    @display("bgb=308,87");
-    submodules:
-        Tx: Transmitter_cc {
-            @display("p=78.259995,29.574999");
-        }
-        Rx: Receiver_cc {
-            @display("p=207.48,29.574999");
-        }
-        Chan: Channel_cc {
-            @display("p=143.78,29.574999");
-        }
-    connections:
-        Tx.out --> {  delay = 100ms; } --> Chan.in;
-        Chan.out --> {  delay = 100ms; } --> Rx.in;
+    parameters:
+        int numberOverheadBits;
+        int NumberUserBits;
+    gates:
+        input in;
+        output out;
 }

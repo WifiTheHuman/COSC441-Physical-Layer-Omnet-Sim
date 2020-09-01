@@ -13,30 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package _441assignment1;
-
-//
-// TODO auto-generated module
-//
-simple Transmitter_cc
-{
-    parameters:
-        int numberOverheadBits;
-    	int NumberUserBits;
-    gates:
-        input in;
-        output out;
-}
-
-simple Receiver_cc
-{
-    parameters:
-        bool errorFlag;
-    	double PLProb_Q;
-    gates:
-        input in;
-        output out;
-}
+package attempt69;
 
 simple Channel_cc
 {
@@ -54,20 +31,3 @@ simple Channel_cc
         input in;
         output out;
 }
-
-network physicalLayer
-{
-    @display("bgb=308,87");
-    submodules:
-        Tx: Transmitter_cc;
-        Rx: Receiver_cc {
-            @display("p=249,30");
-        }
-        Chan: Channel_cc {
-            @display("p=143,30");
-        }
-    connections:
-        Tx.out --> {  delay = 100ms; } --> Chan.in;
-        Chan.out --> {  delay = 100ms; } --> Rx.in;
-}
-

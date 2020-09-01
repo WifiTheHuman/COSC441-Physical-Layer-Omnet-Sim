@@ -13,7 +13,9 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "Channel.cc.h"
+#include "Channel.h"
+#include "packetRecord_m.h"
+
 #include <string.h>
 #include <omnetpp.h>
 #include <iostream>

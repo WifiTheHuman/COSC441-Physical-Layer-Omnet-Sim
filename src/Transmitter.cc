@@ -13,7 +13,9 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "Transmitter.cc.h"
+#include "Transmitter.h"
+#include "packetRecord_m.h"
+
 #include <string.h>
 #include <omnetpp.h>
 #include <iostream>
@@ -24,34 +26,45 @@ class Transmitter : public cSimpleModule
 {
 
 public:
-//    void setNumberOverheadBits(int ovhBits);
-//    void setNumberUserBits(int ovhBits);
-//    int getNumberOverheadBits();
-//    int getNumberUserBits();
+
 private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
     int* numberOverheadBits = new int;
     int* NumberUserBits = new int;
+
 };
 
 Define_Module(Transmitter_cc);
 
 void Transmitter_cc::initialize()
 {
+    //Initializes transmitter at start of simulation
+    //Sets variables to parameters
     *numberOverheadBits = par("numberOverheadBits");
     *NumberUserBits = par("NumberUserBits");
+
     std::cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
     std::cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
-
-
-
 }
 
 void Transmitter_cc::handleMessage(cMessage *msg)
 {
-    // TODO - Generated method body
+    //Occurs when the transmitter receives a message
+    //Deletes received message, generates packet record and sends to out gate
     std::cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
     std::cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
+
+    delete msg;
+
+    packetRecord *myPacket = new packetRecord("myPacket");
+    myPacket->setOvhdBits(*numberOverheadBits);
+    myPacket->setUserBits(*NumberUserBits);
+
+    //set error flag to true if you want to
+    //myPacket->setSequenceNumber(1);
+
+    send(myPacket, "out");
+    std::cout<<"\nTransmitter sending message";
 
 }

@@ -13,13 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO generated message class
-//
-//packet PacketMessage {
-//    int ovhdBits;
-//    int userBits;
-//    bool errorFlag = false;
-//    
-//	int sequenceNumber;
-//}
+package attempt69;
+simple Receiver_cc
+{
+    parameters:
+        bool errorFlag;
+        double PLProb_Q;
+    gates:
+        input in;
+        output out;
+}
