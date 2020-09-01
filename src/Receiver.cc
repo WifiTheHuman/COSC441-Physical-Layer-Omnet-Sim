@@ -39,12 +39,12 @@ void Receiver_cc::initialize()
 {
     *errorFlag = par("errorFlag");
     *PLProb_Q = par("PLProb_Q");
-    std::cout<<"Receiver initialising, errorFlag = "<<*errorFlag;
-    std::cout<<"\nReceiver initialising, PLProb_Q = "<<*PLProb_Q;
+    //std::cout<<"Receiver initialising, errorFlag = "<<*errorFlag;
+    //std::cout<<"\nReceiver initialising, PLProb_Q = "<<*PLProb_Q;
 }
 
 void Receiver_cc::handleMessage(cMessage *msg)
 {
-    std::cout<<"Receiver handling message, errorFlag = "<<*errorFlag;
-    std::cout<<"\nReceiver handling message, PLProb_Q = "<<*PLProb_Q;
+    //std::cout<<"Receiver handling message, errorFlag = "<<*errorFlag;
+    //std::cout<<"\nReceiver handling message, PLProb_Q = "<<*PLProb_Q;
 }

@@ -55,26 +55,26 @@ void Channel_cc::initialize()
     *channelGainGoodDB = par("channelGainGoodDB");
     *channelGainBadDB = par("channelGainBadDB");
 
-    std::cout<<"Channel initialising, nodeDistance = "<<*nodeDistance;
-    std::cout<<"Channel initialising, pathLossExponent = "<<*pathLossExponent;
-    std::cout<<"Channel initialising, txPowerDBm = "<<*txPowerDBm;
-    std::cout<<"Channel initialising, bitRate = "<<*bitRate;
-    std::cout<<"Channel initialising, noisePowerDBm = "<<*noisePowerDBm;
-    std::cout<<"Channel initialising, transProbGoodGood = "<<*transProbGoodGood;
-    std::cout<<"Channel initialising, transProbBadBad = "<<*transProbBadBad;
-    std::cout<<"Channel initialising, channelGainGoodDB = "<<*channelGainGoodDB;
-    std::cout<<"Channel initialising, channelGainBadDB = "<<*channelGainBadDB;
+    //std::cout<<"Channel initialising, nodeDistance = "<<*nodeDistance;
+    //std::cout<<"Channel initialising, pathLossExponent = "<<*pathLossExponent;
+    //std::cout<<"Channel initialising, txPowerDBm = "<<*txPowerDBm;
+    //std::cout<<"Channel initialising, bitRate = "<<*bitRate;
+    //std::cout<<"Channel initialising, noisePowerDBm = "<<*noisePowerDBm;
+    //std::cout<<"Channel initialising, transProbGoodGood = "<<*transProbGoodGood;
+    //std::cout<<"Channel initialising, transProbBadBad = "<<*transProbBadBad;
+    //std::cout<<"Channel initialising, channelGainGoodDB = "<<*channelGainGoodDB;
+    //std::cout<<"Channel initialising, channelGainBadDB = "<<*channelGainBadDB;
 }
 
 void Channel_cc::handleMessage(cMessage *msg)
 {
-    std::cout<<"Channel handling message, nodeDistance = "<<*nodeDistance;
-    std::cout<<"Channel handling message, pathLossExponent = "<<*pathLossExponent;
-    std::cout<<"Channel handling message, txPowerDBm = "<<*txPowerDBm;
-    std::cout<<"Channel handling message, bitRate = "<<*bitRate;
-    std::cout<<"Channel handling message, noisePowerDBm = "<<*noisePowerDBm;
-    std::cout<<"Channel handling message, transProbGoodGood = "<<*transProbGoodGood;
-    std::cout<<"Channel handling message, transProbBadBad = "<<*transProbBadBad;
-    std::cout<<"Channel handling message, channelGainGoodDB = "<<*channelGainGoodDB;
-    std::cout<<"Channel handling message, channelGainBadDB = "<<*channelGainBadDB;
+    //std::cout<<"Channel handling message, nodeDistance = "<<*nodeDistance;
+    //std::cout<<"Channel handling message, pathLossExponent = "<<*pathLossExponent;
+    //std::cout<<"Channel handling message, txPowerDBm = "<<*txPowerDBm;
+    //std::cout<<"Channel handling message, bitRate = "<<*bitRate;
+    //std::cout<<"Channel handling message, noisePowerDBm = "<<*noisePowerDBm;
+    //std::cout<<"Channel handling message, transProbGoodGood = "<<*transProbGoodGood;
+    //std::cout<<"Channel handling message, transProbBadBad = "<<*transProbBadBad;
+    //std::cout<<"Channel handling message, channelGainGoodDB = "<<*channelGainGoodDB;
+    //std::cout<<"Channel handling message, channelGainBadDB = "<<*channelGainBadDB;
 }

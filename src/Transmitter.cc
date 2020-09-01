@@ -44,27 +44,35 @@ void Transmitter_cc::initialize()
     *numberOverheadBits = par("numberOverheadBits");
     *NumberUserBits = par("NumberUserBits");
 
-    std::cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
-    std::cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
+    EV << "Initialising transmitter!\n";
+
+    //std::cout<<"Transmitter initialising, numberOverheadBits = "<<*numberOverheadBits;
+    //std::cout<<"\nTransmitter initialising, NumberUserBits = "<<*NumberUserBits;
 }
 
 void Transmitter_cc::handleMessage(cMessage *msg)
 {
     //Occurs when the transmitter receives a message
     //Deletes received message, generates packet record and sends to out gate
-    std::cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
-    std::cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
+    //std::cout<<"Transmitter handling message, numberOverheadBits = "<<*numberOverheadBits;
+    //std::cout<<"\nTransmitter handling message, NumberUserBits = "<<*NumberUserBits;
+
+    EV << "Transmitter received message!\n";
 
     delete msg;
+
+    EV << "Transmitter deleted message!\n";
 
     packetRecord *myPacket = new packetRecord("myPacket");
     myPacket->setOvhdBits(*numberOverheadBits);
     myPacket->setUserBits(*NumberUserBits);
 
+    EV << "Transmitter created packet record!\n";
+
     //set error flag to true if you want to
     //myPacket->setSequenceNumber(1);
 
     send(myPacket, "out");
-    std::cout<<"\nTransmitter sending message";
-
+    //std::cout<<"\nTransmitter sending message";
+    EV << "Transmitter packet record sent!\n";
 }
