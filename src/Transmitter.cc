@@ -32,6 +32,7 @@ private:
     virtual void handleMessage(cMessage *msg) override;
     int numberOverheadBits;
     int NumberUserBits;
+    int sequenceNumber;
 
     cMessage* trigger;
 };
@@ -75,7 +76,8 @@ void Transmitter_cc::handleMessage(cMessage *msg)
     //myPacket->setSequenceNumber(1);
 
     send(myPacket, "out");
-    EV << "Transmitter packet record sent!\n";
+    sequenceNumber++;
+    EV << "Transmitter sent packet number "<<sequenceNumber<<"\n";
 
     trigger = new cMessage("trigger");
     scheduleAt(simTime() + 1.0, trigger);

@@ -75,7 +75,7 @@ void Channel_cc::handleMessage(cMessage *msg)
     packetRecord *chanMsg = (packetRecord *)msg;
 
     EV<<"Channel handling message!\n";
-    tempRand = rand() % 101;
+    tempRand = rand() % 101+1;
     EV<<"temprand = "<<tempRand<<"\n";
     EV<<"error % "<<errorPercent<<"\n";
 
