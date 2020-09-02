@@ -33,6 +33,7 @@ private:
     int numberOverheadBits;
     int NumberUserBits;
 
+    cMessage* trigger;
 };
 
 Define_Module(Transmitter_cc);
@@ -49,6 +50,8 @@ void Transmitter_cc::initialize()
     EV << "Number of overhead bits = "<<numberOverheadBits<<"\n";
     EV << "Number of user bits = "<<NumberUserBits<<"\n";
 
+    trigger = new cMessage("trigger");
+    scheduleAt(simTime() + 1.0, trigger);
 }
 
 void Transmitter_cc::handleMessage(cMessage *msg)
@@ -73,4 +76,7 @@ void Transmitter_cc::handleMessage(cMessage *msg)
 
     send(myPacket, "out");
     EV << "Transmitter packet record sent!\n";
+
+    trigger = new cMessage("trigger");
+    scheduleAt(simTime() + 1.0, trigger);
 }

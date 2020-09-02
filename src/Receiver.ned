@@ -18,5 +18,5 @@ simple Receiver_cc
 {
     gates:
         input in;
-        output out;
+        //output out;
 }

@@ -42,7 +42,7 @@ class Channel_cc : public cSimpleModule
     double channelGainBadDB;
 
     int tempRand;
-    int errorPercent = 100;
+    int errorPercent = 40;
 };
 
 #endif

@@ -18,21 +18,12 @@ package attempt69;
 //
 // TODO auto-generated module
 //
-simple Txc1
-{
-    gates:
-        input in;
-        output out;
-}
 
 network physicalLayer
 {
     @display("bgb=308,87");
     submodules:
-        tic: Txc1 {
 
-            @display("p=15.924999,29.574999");
-        }
         Tx: Transmitter_cc {
             @display("p=129.67499,11.829999");
         }
@@ -45,7 +36,6 @@ network physicalLayer
     connections:
         Tx.out --> {  delay = 100ms; } --> Chan.in;
         Chan.out --> {  delay = 100ms; } --> Rx.in;
-        tic.out --> {  delay = 100ms; } --> Tx.in;
-        Rx.out --> {  delay = 100ms; } --> tic.in;
+
 
 }

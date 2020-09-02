@@ -36,6 +36,7 @@ class Transmitter_cc : public cSimpleModule
   private:
     int numberOverheadBits;
     int NumberUserBits;
+    cMessage* trigger;
 };
 
 #endif
