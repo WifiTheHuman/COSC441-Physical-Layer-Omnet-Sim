@@ -28,7 +28,7 @@ class Receiver : public cSimpleModule
 public:
 private:
     virtual void initialize() override;
-    virtual void handleMessage(packetRecord *msg);
+    virtual void handleMessage(cMessage *msg);
 
     cStdDev errorFlagCollection;
     double Q;
@@ -43,15 +43,16 @@ void Receiver_cc::initialize()
 
 }
 
-void Receiver_cc::handleMessage(packetRecord *msg)
+void Receiver_cc::handleMessage(cMessage *msg)
 {
+    packetRecord *chanMsg = (packetRecord *)msg;
     EV << "Receiver processing packet record!\n";
 
-    if (msg->getErrorFlag() == true){
+    if (chanMsg->getErrorFlag() == true){
         EV << "Packet record contains error!\n";
         errorFlagCollection.collect(1.0);
     }
-    else if (msg->getErrorFlag() == false){
+    else if (chanMsg->getErrorFlag() == false){
         EV << "Packet record is error free!\n";
         errorFlagCollection.collect(0.0);
     }
@@ -60,5 +61,6 @@ void Receiver_cc::handleMessage(packetRecord *msg)
     }
 
     EV << "Current mean: " << errorFlagCollection.getMean() << "\n";
+    delete chanMsg;
 
 }

@@ -17,6 +17,7 @@
 #define ___441ASSIGNMENT1_CHANNEL_CC_H_
 
 #include <omnetpp.h>
+#include "packetRecord_m.h"
 
 using namespace omnetpp;
 
@@ -39,6 +40,9 @@ class Channel_cc : public cSimpleModule
     double transProbBadBad;
     double channelGainGoodDB;
     double channelGainBadDB;
+
+    int tempRand;
+    int errorPercent = 100;
 };
 
 #endif

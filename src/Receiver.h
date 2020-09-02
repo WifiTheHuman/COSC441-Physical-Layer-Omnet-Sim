@@ -28,7 +28,7 @@ class Receiver_cc : public cSimpleModule
 {
   protected:
     virtual void initialize();
-    virtual void handleMessage(packetRecord *msg);
+    virtual void handleMessage(cMessage *msg);
   private:
     cStdDev errorFlagCollection;
     double Q;

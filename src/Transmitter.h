@@ -17,6 +17,11 @@
 #define ___441ASSIGNMENT1_TRANSMITTER_CC_H_
 
 #include <omnetpp.h>
+#include "packetRecord_m.h"
+
+#include <string.h>
+#include <omnetpp.h>
+#include <iostream>
 
 using namespace omnetpp;
 

@@ -27,7 +27,7 @@ public:
 
 protected:
     virtual void initialize() override;
-    virtual void handleMessage(cMessage *msg) override;
+    virtual void handleMessage(cMessage *msg);
 
 private:
     double nodeDistance;
@@ -39,6 +39,9 @@ private:
     double transProbBadBad;
     double channelGainGoodDB;
     double channelGainBadDB;
+
+    int tempRand;
+    int errorPercent;
 };
 
 Define_Module(Channel_cc);
@@ -68,5 +71,21 @@ void Channel_cc::initialize()
 
 void Channel_cc::handleMessage(cMessage *msg)
 {
-    EV<<"Channel handling message!";
+
+    packetRecord *chanMsg = (packetRecord *)msg;
+
+    EV<<"Channel handling message!\n";
+    tempRand = rand() % 101;
+    EV<<"temprand = "<<tempRand<<"\n";
+    EV<<"error % "<<errorPercent<<"\n";
+
+    if (tempRand < errorPercent){
+        EV<<"Channel introduced error!\n";
+        chanMsg->setErrorFlag(true);
+    }
+
+    else {
+        EV<<"Channel transmits without error!\n";
+    }
+    send(chanMsg, "out");
 }
