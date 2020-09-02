@@ -30,8 +30,8 @@ private:
     virtual void initialize() override;
     virtual void handleMessage(packetRecord *msg);
 
-    cStdDev* errorFlagCollection = new cStdDev;
-    double* Q = new double;
+    cStdDev errorFlagCollection;
+    double Q;
 };
 
 Define_Module(Receiver_cc);
@@ -49,16 +49,16 @@ void Receiver_cc::handleMessage(packetRecord *msg)
 
     if (msg->getErrorFlag() == true){
         EV << "Packet record contains error!\n";
-        errorFlagCollection->collect(1.0);
+        errorFlagCollection.collect(1.0);
     }
     else if (msg->getErrorFlag() == false){
         EV << "Packet record is error free!\n";
-        errorFlagCollection->collect(0.0);
+        errorFlagCollection.collect(0.0);
     }
     else{
         EV << "Warning: unexpected behavior for getErrorFlag called by receiver\n";
     }
 
-    EV << "Current mean: " << errorFlagCollection->getMean() << "\n";
+    EV << "Current mean: " << errorFlagCollection.getMean() << "\n";
 
 }

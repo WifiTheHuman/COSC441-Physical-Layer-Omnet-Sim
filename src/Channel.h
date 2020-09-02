@@ -30,15 +30,15 @@ class Channel_cc : public cSimpleModule
     virtual void handleMessage(cMessage *msg);
 
   private:
-    double* nodeDistance;
-    double* pathLossExponent;
-    double* txPowerDBm;
-    double* bitRate;
-    double* noisePowerDBm;
-    double* transProbGoodGood;
-    double* transProbBadBad;
-    double* channelGainGoodDB;
-    double* channelGainBadDB;
+    double nodeDistance;
+    double pathLossExponent;
+    double txPowerDBm;
+    double bitRate;
+    double noisePowerDBm;
+    double transProbGoodGood;
+    double transProbBadBad;
+    double channelGainGoodDB;
+    double channelGainBadDB;
 };
 
 #endif

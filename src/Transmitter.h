@@ -29,8 +29,8 @@ class Transmitter_cc : public cSimpleModule
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
   private:
-    int* numberOverheadBits;
-    int* NumberUserBits;
+    int numberOverheadBits;
+    int NumberUserBits;
 };
 
 #endif

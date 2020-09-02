@@ -30,8 +30,8 @@ public:
 private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
-    int* numberOverheadBits = new int;
-    int* NumberUserBits = new int;
+    int numberOverheadBits;
+    int NumberUserBits;
 
 };
 
@@ -41,13 +41,13 @@ void Transmitter_cc::initialize()
 {
     //Initializes transmitter at start of simulation
     //Sets variables to parameters
-    *numberOverheadBits = par("numberOverheadBits");
-    *NumberUserBits = par("NumberUserBits");
+    numberOverheadBits = par("numberOverheadBits");
+    NumberUserBits = par("NumberUserBits");
 
     EV << "Initialising transmitter!\n";
 
-    EV << "Number of overhead bits = "<<*numberOverheadBits<<"\n";
-    EV << "Number of user bits = "<<*NumberUserBits<<"\n";
+    EV << "Number of overhead bits = "<<numberOverheadBits<<"\n";
+    EV << "Number of user bits = "<<NumberUserBits<<"\n";
 
 }
 
@@ -63,8 +63,8 @@ void Transmitter_cc::handleMessage(cMessage *msg)
     EV << "Transmitter deleted message!\n";
 
     packetRecord *myPacket = new packetRecord("myPacket");
-    myPacket->setOvhdBits(*numberOverheadBits);
-    myPacket->setUserBits(*NumberUserBits);
+    myPacket->setOvhdBits(numberOverheadBits);
+    myPacket->setUserBits(NumberUserBits);
 
     EV << "Transmitter created packet record!\n";
 

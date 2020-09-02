@@ -30,8 +30,8 @@ class Receiver_cc : public cSimpleModule
     virtual void initialize();
     virtual void handleMessage(packetRecord *msg);
   private:
-    cStdDev* errorFlagCollection;
-    double* Q;
+    cStdDev errorFlagCollection;
+    double Q;
 };
 
 #endif
