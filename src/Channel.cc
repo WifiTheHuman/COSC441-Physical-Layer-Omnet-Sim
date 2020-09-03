@@ -19,6 +19,9 @@
 #include <string.h>
 #include <omnetpp.h>
 #include <iostream>
+#include <time.h>
+#include <cmath>
+#include <math.h>
 
 class Channel : public cSimpleModule
 {
@@ -30,6 +33,7 @@ protected:
     virtual void handleMessage(cMessage *msg);
 
 private:
+    //Paremeters from .ned file
     double nodeDistance;
     double pathLossExponent;
     double txPowerDBm;
@@ -40,14 +44,22 @@ private:
     double channelGainGoodDB;
     double channelGainBadDB;
 
-    int tempRand;
-    int errorPercent;
+    double tempRand;
+    double BER;
+    double PLd;
+    double receivedPower;
+    double SNR;
+
+    bool chanGood = true;
+    bool nextChanGood = true;
 };
 
 Define_Module(Channel_cc);
 
 void Channel_cc::initialize()
 {
+    //Runs at start of simulation
+    //Gets values from .ned parameters
     nodeDistance = par("nodeDistance");
     pathLossExponent = par("pathLossExponent");
     txPowerDBm = par("txPowerDBm");
@@ -71,21 +83,78 @@ void Channel_cc::initialize()
 
 void Channel_cc::handleMessage(cMessage *msg)
 {
-
+    //Handles incoming messages ot the channel
     packetRecord *chanMsg = (packetRecord *)msg;
 
-    EV<<"Channel handling message!\n";
-    tempRand = rand() % 101+1;
-    EV<<"temprand = "<<tempRand<<"\n";
-    EV<<"error % "<<errorPercent<<"\n";
+    EV<<"Channel handling message!\n\n";
+    srand(time(0));
 
-    if (tempRand < errorPercent){
+    //////////////////////////////////////////////
+    //This section determines state of channel:
+    tempRand = rand()/(double)RAND_MAX;
+    if (chanGood == true) {
+        if(tempRand < transProbGoodGood){
+            nextChanGood = false;
+            EV<<"transProbGoodGood = "<<transProbGoodGood<<"\n";
+        }
+    }
+    else {
+        if(tempRand < transProbBadBad){
+            nextChanGood = true;
+            EV<<"transProbBadBad = "<<transProbBadBad<<"\n";
+        }
+    }
+    EV<<"temprand = "<<tempRand<<"\n";
+    EV<<"Channel is currently good: "<<chanGood<<"\n"<<"Channel next state is good: "<<nextChanGood<<"\n\n";
+
+    //////////////////////////////////////////////
+    //This section determines path loss from node distance and path loss exponent
+    if (nodeDistance <= 1.0) {
+        PLd = 1.0;
+    }
+    else {
+        PLd = pow(nodeDistance, pathLossExponent);
+    }
+    EV<<"path loss = "<<PLd<<"\n\n";
+    //Convert to decibels
+    PLd = 10 * log10(PLd);
+    EV<<"PLd in dB = "<<PLd<<"\n";
+    //////////////////////////////////////////////
+    //This section determines received power in dBm
+
+    if(chanGood == true) {
+        receivedPower = txPowerDBm + channelGainGoodDB - PLd;
+    }
+    else {
+        receivedPower = txPowerDBm + channelGainBadDB - PLd;
+    }
+    EV<<"receivedPower = "<<receivedPower<<"\n";
+    ///////////////////////////////////////////////
+
+    //////////////////////////////////////////////
+    //This section calculates the SNR
+    SNR = receivedPower - noisePowerDBm + bitRate;
+    EV<<"SNR = "<<SNR<<"\n";
+    //////////////////////////////////////////////
+    //This section calculates the bit error rate
+    BER = erfc(sqrt(2 * (pow(10, SNR)/10)));
+    EV<<"BER = "<<BER<<"\n";
+    ///////////////////////////////////////////
+    //This section determines if the channel introduces errors
+    tempRand = rand()/(double)RAND_MAX;
+
+    EV<<"temprand = "<<tempRand<<"\n";
+    if (tempRand < BER){
         EV<<"Channel introduced error!\n";
         chanMsg->setErrorFlag(true);
     }
-
     else {
         EV<<"Channel transmits without error!\n";
     }
+
+    ////////////////////////////////////////////
+
     send(chanMsg, "out");
+    //Update channel state to next channel state
+    chanGood = nextChanGood;
 }

@@ -18,6 +18,7 @@
 
 #include <omnetpp.h>
 #include "packetRecord_m.h"
+#include<time.h>
 
 using namespace omnetpp;
 
@@ -41,8 +42,15 @@ class Channel_cc : public cSimpleModule
     double channelGainGoodDB;
     double channelGainBadDB;
 
-    int tempRand;
-    int errorPercent = 40;
+    double tempRand;
+    double BER = 0.4;
+    double PLd;
+    double receivedPower;
+    double SNR;
+
+    bool chanGood = true;
+    bool nextChanGood = true;
+
 };
 
 #endif
