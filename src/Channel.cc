@@ -50,6 +50,8 @@ private:
     double receivedPower;
     double SNR;
 
+    int packetSize;
+
     bool chanGood = true;
     bool nextChanGood = true;
 };
@@ -86,10 +88,12 @@ void Channel_cc::handleMessage(cMessage *msg)
     //Handles incoming messages ot the channel
     packetRecord *chanMsg = (packetRecord *)msg;
 
+    packetSize = chanMsg->getUserBits() + chanMsg->getOvhdBits();
+
     EV<<"Channel handling message!\n\n";
     srand(time(0));
 
-    for(int i = 0;  i < 100; i++) {
+    for(int i = 0;  i < packetSize; i++) {
         //////////////////////////////////////////////
             //This section determines state of channel:
             tempRand = rand()/(double)RAND_MAX;

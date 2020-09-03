@@ -48,6 +48,8 @@ class Channel_cc : public cSimpleModule
     double receivedPower;
     double SNR;
 
+    int packetSize;
+
     bool chanGood = true;
     bool nextChanGood = true;
 
