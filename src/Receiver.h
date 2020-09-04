@@ -32,6 +32,7 @@ class Receiver_cc : public cSimpleModule
   private:
     cStdDev errorFlagCollection;
     double Q;
+    double goodput;
 };
 
 #endif

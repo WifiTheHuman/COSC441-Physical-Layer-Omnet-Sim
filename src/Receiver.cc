@@ -32,6 +32,7 @@ private:
 
     cStdDev errorFlagCollection;
     double Q;
+    double goodput;
 };
 
 Define_Module(Receiver_cc);
@@ -59,8 +60,10 @@ void Receiver_cc::handleMessage(cMessage *msg)
     else{
         EV << "Warning: unexpected behavior for getErrorFlag called by receiver\n";
     }
-
-    EV << "Current mean: " << errorFlagCollection.getMean() << "\n";
+    Q = errorFlagCollection.getMean();
+    goodput = ((1-Q) * chanMsg->getUserBits())/(chanMsg->getUserBits() + chanMsg->getOvhdBits());
+    EV << "Current mean: " << Q << "\n";
+    EV << "Current goodput: " << goodput << "\n";
     delete chanMsg;
 
 }

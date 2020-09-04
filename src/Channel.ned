@@ -30,4 +30,5 @@ simple Channel_cc
     gates:
         input in;
         output out;
+        output requestOut;
 }

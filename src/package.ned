@@ -34,8 +34,10 @@ network physicalLayer
             @display("p=237.055,29.574999");
         }
     connections:
-        Tx.out --> {  delay = 100ms; } --> Chan.in;
-        Chan.out --> {  delay = 100ms; } --> Rx.in;
-
+//        Tx.out --> {  delay = 100ms; } --> Chan.in;
+//        Chan.out --> {  delay = 100ms; } --> Rx.in;
+		Tx.out --> Chan.in;
+        Chan.out --> Rx.in;
+        Chan.requestOut --> Tx.in;
 
 }

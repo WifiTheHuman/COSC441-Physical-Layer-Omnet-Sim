@@ -21,6 +21,6 @@ simple Transmitter_cc
         int numberOverheadBits;
         int NumberUserBits;
     gates:
-        //input in;
+        input in;
         output out;
 }

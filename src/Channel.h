@@ -62,6 +62,8 @@ class Channel_cc : public cSimpleModule
     bool chanGood = true;
     bool nextChanGood = true;
 
+    cMessage *requestMsg = new cMessage();
+
 };
 
 #endif

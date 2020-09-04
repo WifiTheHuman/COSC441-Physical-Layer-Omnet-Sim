@@ -58,6 +58,8 @@ private:
 
     bool chanGood = true;
     bool nextChanGood = true;
+
+    cMessage *requestMsg = new cMessage();
 };
 
 Define_Module(Channel_cc);
@@ -88,6 +90,10 @@ void Channel_cc::initialize()
     EV<<"Channel initialising, transProbBadBad = "<<transProbBadBad<<"\n";
     EV<<"Channel initialising, channelGainGoodDB = "<<channelGainGoodDB<<"\n";
     EV<<"Channel initialising, channelGainBadDB = "<<channelGainBadDB<<"\n";
+
+
+    send(requestMsg, "requestOut");
+
 }
 
 void Channel_cc::determineChanState() {
@@ -211,6 +217,10 @@ void Channel_cc::handleMessage(cMessage *msg)
     }
     //////////////////////////////////////////////
     //This section determines state of channel:
-    send(chanMsg, "out");
     EV<<"Error flag state: "<<chanMsg->getErrorFlag()<<"\n";
+
+    send(chanMsg, "out");
+
+    cMessage *requestMsg = new cMessage();
+    send(requestMsg, "requestOut");
 }
