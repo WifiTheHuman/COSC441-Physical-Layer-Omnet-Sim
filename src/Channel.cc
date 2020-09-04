@@ -93,69 +93,69 @@ void Channel_cc::handleMessage(cMessage *msg)
     EV<<"Channel handling message!\n\n";
     srand(time(0));
 
-    for(int i = 0;  i < packetSize; i++) {
-        //////////////////////////////////////////////
-            //This section determines state of channel:
-            tempRand = rand()/(double)RAND_MAX;
-            if (chanGood == true) {
-                if(tempRand < transProbGoodGood){
-                    nextChanGood = false;
-                    EV<<"transProbGoodGood = "<<transProbGoodGood<<"\n";
-                }
-            }
-            else {
-                if(tempRand < transProbBadBad){
-                    nextChanGood = true;
-                    EV<<"transProbBadBad = "<<transProbBadBad<<"\n";
-                }
-            }
-            EV<<"temprand = "<<tempRand<<"\n";
-            EV<<"Channel is currently good: "<<chanGood<<"\n"<<"Channel next state is good: "<<nextChanGood<<"\n\n";
-
-            //////////////////////////////////////////////
-            //This section determines path loss from node distance and path loss exponent
-            if (nodeDistance <= 1.0) {
-                PLd = 1.0;
-            }
-            else {
-                PLd = pow(nodeDistance, pathLossExponent);
-            }
-            EV<<"path loss = "<<PLd<<"\n\n";
-            EV<<"PLd = "<<PLd<<"\n";
-            //////////////////////////////////////////////
-            //This section determines received power in dBm
-
-            if(chanGood == true) {
-                receivedPower = txPowerDBm + channelGainGoodDB - 10 * log10(PLd);
-            }
-            else {
-                receivedPower = txPowerDBm + channelGainBadDB - 10 * log10(PLd);
-            }
-            EV<<"receivedPower = "<<receivedPower<<"\n";
-            ///////////////////////////////////////////////
-
-            //////////////////////////////////////////////
-            //This section calculates the SNR
-            SNR = receivedPower - noisePowerDBm - (10 * log10(bitRate));
-            EV<<"SNR = "<<SNR<<"\n";
-            //////////////////////////////////////////////
-            //This section calculates the bit error rate
-            BER = erfc(sqrt(2 * ((pow(10, SNR))/10)));
-            EV<<"BER = "<<BER<<"\n";
-            ///////////////////////////////////////////
-            //This section determines if the channel introduces errors
-            tempRand = rand()/(double)RAND_MAX;
-
-            EV<<"temprand = "<<tempRand<<"\n";
-            if (tempRand < BER){
-                EV<<"Channel introduced error!\n";
-                chanMsg->setErrorFlag(true);
-            }
-            else {
-                EV<<"Channel transmits without error!\n";
-            }
-            ////////////////////////////////////////////
+//////////////////////////////////////////////
+    //This section determines state of channel:
+    EV<<"\nNew bit incoming!\n\n";
+    tempRand = rand()/(double)RAND_MAX;
+    if (chanGood == true) {
+        if(tempRand < transProbGoodGood){
+            nextChanGood = false;
+            EV<<"transProbGoodGood = "<<transProbGoodGood<<"\n";
+        }
     }
+    else {
+        if(tempRand < transProbBadBad){
+            nextChanGood = true;
+            EV<<"transProbBadBad = "<<transProbBadBad<<"\n";
+        }
+    }
+    EV<<"temprand = "<<tempRand<<"\n";
+    EV<<"Channel is currently good: "<<chanGood<<"\n"<<"Channel next state is good: "<<nextChanGood<<"\n\n";
+
+    //////////////////////////////////////////////
+    //This section determines path loss from node distance and path loss exponent
+    if (nodeDistance <= 1.0) {
+        PLd = 1.0;
+    }
+    else {
+        PLd = pow(nodeDistance, pathLossExponent);
+    }
+    EV<<"path loss = "<<PLd<<"\n\n";
+    EV<<"PLd = "<<PLd<<"\n";
+    //////////////////////////////////////////////
+    //This section determines received power in dBm
+
+    if(chanGood == true) {
+        receivedPower = txPowerDBm + channelGainGoodDB - 10 * log10(PLd);
+    }
+    else {
+        receivedPower = txPowerDBm + channelGainBadDB - 10 * log10(PLd);
+    }
+    EV<<"receivedPower = "<<receivedPower<<"\n";
+    ///////////////////////////////////////////////
+
+    //////////////////////////////////////////////
+    //This section calculates the SNR
+    SNR = receivedPower - noisePowerDBm - (10 * log10(bitRate));
+    EV<<"SNR = "<<SNR<<"\n";
+    //////////////////////////////////////////////
+    //This section calculates the bit error rate
+    BER = erfc(sqrt(2 * (pow(10, SNR/10))));
+    EV<<"BER = "<<BER<<"\n";
+    ///////////////////////////////////////////
+    //This section determines if the channel introduces errors
+    tempRand = rand()/(double)RAND_MAX;
+
+    EV<<"temprand = "<<tempRand<<"\n";
+    if (tempRand < BER){
+        EV<<"Channel introduced error!\n";
+        chanMsg->setErrorFlag(true);
+    }
+    else {
+        EV<<"Channel transmits without error!\n";
+    }
+    ////////////////////////////////////////////
+
 
 
     send(chanMsg, "out");
