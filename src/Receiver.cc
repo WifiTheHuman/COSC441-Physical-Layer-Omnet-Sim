@@ -31,6 +31,8 @@ private:
     virtual void handleMessage(cMessage *msg);
 
     cStdDev errorFlagCollection;
+    cOutVector errorFlagStats;
+    cOutVector goodputStats;
     double Q;
     double goodput;
 };
@@ -40,30 +42,33 @@ Define_Module(Receiver_cc);
 void Receiver_cc::initialize()
 {
     //Initialises receiver at start of simulation
-    EV << "Initialising Receiver!\n";
-
+//    EV << "Initialising Receiver!\n";
+    errorFlagCollection.setName("Packet Loss rate Q");
+    goodputStats.setName("Goodput");
 }
 
 void Receiver_cc::handleMessage(cMessage *msg)
 {
     packetRecord *chanMsg = (packetRecord *)msg;
-    EV << "Receiver processing packet record!\n";
+//    EV << "Receiver processing packet record!\n";
 
     if (chanMsg->getErrorFlag() == true){
-        EV << "Packet record contains error!\n";
+//        EV << "Packet record contains error!\n";
         errorFlagCollection.collect(1.0);
+        errorFlagStats.record(1.0);
     }
     else if (chanMsg->getErrorFlag() == false){
-        EV << "Packet record is error free!\n";
+//        EV << "Packet record is error free!\n";
         errorFlagCollection.collect(0.0);
+        errorFlagStats.record(0.0);
+        EV << "Oh god oh shit oh fuck";
     }
-    else{
-        EV << "Warning: unexpected behavior for getErrorFlag called by receiver\n";
-    }
+
     Q = errorFlagCollection.getMean();
     goodput = ((1-Q) * chanMsg->getUserBits())/(chanMsg->getUserBits() + chanMsg->getOvhdBits());
+    //goodputStats.record(goodput);
     EV << "Current mean: " << Q << "\n";
-    EV << "Current goodput: " << goodput << "\n";
+//    EV << "Current goodput: " << goodput << "\n";
     delete chanMsg;
 
 }

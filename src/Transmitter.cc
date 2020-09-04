@@ -44,10 +44,10 @@ void Transmitter_cc::initialize()
     numberOverheadBits = par("numberOverheadBits");
     NumberUserBits = par("NumberUserBits");
 
-    EV << "Initialising transmitter!\n";
+//    EV << "Initialising transmitter!\n";
 
-    EV << "Number of overhead bits = "<<numberOverheadBits<<"\n";
-    EV << "Number of user bits = "<<NumberUserBits<<"\n";
+//    EV << "Number of overhead bits = "<<numberOverheadBits<<"\n";
+//    EV << "Number of user bits = "<<NumberUserBits<<"\n";
 
 
 }
@@ -57,23 +57,23 @@ void Transmitter_cc::handleMessage(cMessage *msg)
     //Occurs when the transmitter receives a message
     //Deletes received message, generates packet record and sends to out gate
 
-    EV << "Transmitter received message!\n";
+//    EV << "Transmitter received message!\n";
 
     delete msg;
 
-    EV << "Transmitter deleted message!\n";
+//    EV << "Transmitter deleted message!\n";
 
     packetRecord *myPacket = new packetRecord("myPacket");
     myPacket->setOvhdBits(numberOverheadBits);
     myPacket->setUserBits(NumberUserBits);
 
-    EV << "Transmitter created packet record!\n";
+//    EV << "Transmitter created packet record!\n";
 
     //set error flag to true if you want to
     //myPacket->setSequenceNumber(1);
 
     send(myPacket, "out");
     sequenceNumber++;
-    EV << "Transmitter sent packet number "<<sequenceNumber<<"\n";
+//    EV << "Transmitter sent packet number "<<sequenceNumber<<"\n";
 
 }

@@ -31,6 +31,8 @@ class Receiver_cc : public cSimpleModule
     virtual void handleMessage(cMessage *msg);
   private:
     cStdDev errorFlagCollection;
+    cOutVector errorFlagStats;
+    cOutVector goodputStats;
     double Q;
     double goodput;
 };

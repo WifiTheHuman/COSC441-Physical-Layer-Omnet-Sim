@@ -78,18 +78,15 @@ void Channel_cc::initialize()
     channelGainGoodDB = par("channelGainGoodDB");
     channelGainBadDB = par("channelGainBadDB");
 
-    calcPathLoss();
-    calcBER();
-
-    EV<<"Channel initialising, nodeDistance = "<<nodeDistance<<"\n";
-    EV<<"Channel initialising, pathLossExponent = "<<pathLossExponent<<"\n";
-    EV<<"Channel initialising, txPowerDBm = "<<txPowerDBm<<"\n";
-    EV<<"Channel initialising, bitRate = "<<bitRate<<"\n";
-    EV<<"Channel initialising, noisePowerDBm = "<<noisePowerDBm<<"\n";
-    EV<<"Channel initialising, transProbGoodGood = "<<transProbGoodGood<<"\n";
-    EV<<"Channel initialising, transProbBadBad = "<<transProbBadBad<<"\n";
-    EV<<"Channel initialising, channelGainGoodDB = "<<channelGainGoodDB<<"\n";
-    EV<<"Channel initialising, channelGainBadDB = "<<channelGainBadDB<<"\n";
+//    EV<<"Channel initialising, nodeDistance = "<<nodeDistance<<"\n";
+//    EV<<"Channel initialising, pathLossExponent = "<<pathLossExponent<<"\n";
+//    EV<<"Channel initialising, txPowerDBm = "<<txPowerDBm<<"\n";
+//    EV<<"Channel initialising, bitRate = "<<bitRate<<"\n";
+//    EV<<"Channel initialising, noisePowerDBm = "<<noisePowerDBm<<"\n";
+//    EV<<"Channel initialising, transProbGoodGood = "<<transProbGoodGood<<"\n";
+//    EV<<"Channel initialising, transProbBadBad = "<<transProbBadBad<<"\n";
+//    EV<<"Channel initialising, channelGainGoodDB = "<<channelGainGoodDB<<"\n";
+//    EV<<"Channel initialising, channelGainBadDB = "<<channelGainBadDB<<"\n";
 
 
     send(requestMsg, "requestOut");
@@ -103,7 +100,7 @@ void Channel_cc::determineChanState() {
     if (chanGood == true) {
         if(tempRand < transProbGoodGood){
             nextChanGood = true;
-            EV<<"transProbGoodGood = "<<transProbGoodGood<<"\n";
+//            EV<<"transProbGoodGood = "<<transProbGoodGood<<"\n";
         }
         else {
             nextChanGood = false;
@@ -112,14 +109,14 @@ void Channel_cc::determineChanState() {
     else {
         if(tempRand < transProbBadBad){
             nextChanGood = false;
-            EV<<"transProbBadBad = "<<transProbBadBad<<"\n";
+//            EV<<"transProbBadBad = "<<transProbBadBad<<"\n";
         }
         else {
             nextChanGood = true;
         }
     }
-    EV<<"temprand = "<<tempRand<<"\n";
-    EV<<"Channel is currently good: "<<chanGood<<"\n"<<"Channel next state is good: "<<nextChanGood<<"\n\n";
+//    EV<<"temprand = "<<tempRand<<"\n";
+//    EV<<"Channel is currently good: "<<chanGood<<"\n"<<"Channel next state is good: "<<nextChanGood<<"\n\n";
 }
 
 void Channel_cc::calcPathLoss() {
@@ -162,7 +159,7 @@ void Channel_cc::calcPathLoss() {
 void Channel_cc::calcBER() {
     //////////////////////////////////////////////
         //This section determines received power in dBm
-
+        calcPathLoss();
         receivedPowerGood = txPowerDBm + channelGainGoodDB - 10 * log10(PLd);
         receivedPowerBad = txPowerDBm + channelGainBadDB - 10 * log10(PLd);
 
@@ -176,6 +173,7 @@ void Channel_cc::calcBER() {
         BERGood = erfc(sqrt(2 * (pow(10, SNRGood/10))));
         BERBad = erfc(sqrt(2 * (pow(10, SNRBad/10))));
         EV<<"BERGood = "<<BERGood<<"\n";
+        EV<<"BERBad = "<<BERBad<<"\n";
         //////////////////////////////////////////////
 }
 
@@ -186,11 +184,12 @@ void Channel_cc::handleMessage(cMessage *msg)
 
     packetSize = chanMsg->getUserBits() + chanMsg->getOvhdBits();
 
-    EV<<"Channel handling message!\n\n";
+//    EV<<"Channel handling message!\n\n";
     srand(time(0));
-
+    calcPathLoss();//maybe move to init
+    calcBER();
     for (int i = 0; i < packetSize; i++) {
-        EV<<"\nNew bit incoming!\n\n";
+//        EV<<"\nNew bit incoming!\n\n";
         determineChanState();
 
         if (chanGood) {
@@ -202,14 +201,14 @@ void Channel_cc::handleMessage(cMessage *msg)
         //This section determines if the channel introduces errors
         tempRand = rand()/(double)RAND_MAX;
 
-        EV<<"temprand = "<<tempRand<<"\n";
+//        EV<<"temprand = "<<tempRand<<"\n";
 
         if (tempRand < BER){
-            EV<<"Bit contains error!\n";
+//            EV<<"Bit contains error!\n";
             chanMsg->setErrorFlag(true);
         }
         else {
-            EV<<"Bit transmits without error!\n";
+//            EV<<"Bit transmits without error!\n";
         }
         ////////////////////////////////////////////
         //Update channel state to next channel state
@@ -217,7 +216,7 @@ void Channel_cc::handleMessage(cMessage *msg)
     }
     //////////////////////////////////////////////
     //This section determines state of channel:
-    EV<<"Error flag state: "<<chanMsg->getErrorFlag()<<"\n";
+//    EV<<"Error flag state: "<<chanMsg->getErrorFlag()<<"\n";
 
     send(chanMsg, "out");
 
