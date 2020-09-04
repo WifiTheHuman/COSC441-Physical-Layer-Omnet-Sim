@@ -30,6 +30,11 @@ class Channel_cc : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    void determineChanState();
+    void calcPathLoss();
+    void calcReceivedPower();
+    void calcSNRandBER();
+    void calcBER();
 
   private:
     double nodeDistance;
@@ -43,10 +48,14 @@ class Channel_cc : public cSimpleModule
     double channelGainBadDB;
 
     double tempRand;
-    double BER = 0.4;
+    double BERGood;
+    double BERBad;
+    double BER;
     double PLd;
-    double receivedPower;
-    double SNR;
+    double receivedPowerGood;
+    double receivedPowerBad;
+    double SNRGood;
+    double SNRBad;
 
     int packetSize;
 
