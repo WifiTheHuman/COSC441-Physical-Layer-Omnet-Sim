@@ -22,6 +22,8 @@
 #include <time.h>
 #include <cmath>
 #include <math.h>
+//#include <ccomponent.h>
+//#include <crng.h>
 
 class Channel : public cSimpleModule
 {
@@ -96,7 +98,7 @@ void Channel_cc::initialize()
 void Channel_cc::determineChanState() {
     /////////////////////////////////////
     //Determines next channel state from current state
-    tempRand = rand()/(double)RAND_MAX;
+    tempRand = uniform(0.0, 1.0, 0);
     if (chanGood == true) {
         if(tempRand < transProbGoodGood){
             nextChanGood = true;
@@ -128,7 +130,7 @@ void Channel_cc::calcPathLoss() {
         else {
             PLd = pow(nodeDistance, pathLossExponent);
         }
-        EV<<"path loss = "<<PLd<<"\n\n";
+        //EV<<"path loss = "<<PLd<<"\n\n";
 }
 //
 //void Channel_cc::calcReceivedPower() {
@@ -163,17 +165,17 @@ void Channel_cc::calcBER() {
         receivedPowerGood = txPowerDBm + channelGainGoodDB - 10 * log10(PLd);
         receivedPowerBad = txPowerDBm + channelGainBadDB - 10 * log10(PLd);
 
-        EV<<"receivedPower = "<<receivedPowerGood<<"\n";
+        //EV<<"receivedPower = "<<receivedPowerGood<<"\n";
         //////////////////////////////////////////
         //This section calculates the SNR
         SNRGood = receivedPowerGood - noisePowerDBm - (10 * log10(bitRate));
         SNRBad = receivedPowerBad - noisePowerDBm - (10 * log10(bitRate));
-        EV<<"SNR = "<<SNRGood<<"\n";
+        //EV<<"SNR = "<<SNRGood<<"\n";
         //This section calculates the bit error rate
         BERGood = erfc(sqrt(2 * (pow(10, SNRGood/10))));
         BERBad = erfc(sqrt(2 * (pow(10, SNRBad/10))));
-        EV<<"BERGood = "<<BERGood<<"\n";
-        EV<<"BERBad = "<<BERBad<<"\n";
+        //EV<<"BERGood = "<<BERGood<<"\n";
+        //EV<<"BERBad = "<<BERBad<<"\n";
         //////////////////////////////////////////////
 }
 
@@ -185,7 +187,6 @@ void Channel_cc::handleMessage(cMessage *msg)
     packetSize = chanMsg->getUserBits() + chanMsg->getOvhdBits();
 
 //    EV<<"Channel handling message!\n\n";
-    srand(time(0));
     calcPathLoss();//maybe move to init
     calcBER();
     for (int i = 0; i < packetSize; i++) {
@@ -199,12 +200,12 @@ void Channel_cc::handleMessage(cMessage *msg)
             BER = BERBad;
         }
         //This section determines if the channel introduces errors
-        tempRand = rand()/(double)RAND_MAX;
+        tempRand = uniform(0.0, 1.0, 0);
 
 //        EV<<"temprand = "<<tempRand<<"\n";
 
         if (tempRand < BER){
-//            EV<<"Bit contains error!\n";
+            //EV<<"Bit contains error!\n";
             chanMsg->setErrorFlag(true);
         }
         else {

@@ -56,19 +56,22 @@ void Receiver_cc::handleMessage(cMessage *msg)
 //        EV << "Packet record contains error!\n";
         errorFlagCollection.collect(1.0);
         errorFlagStats.record(1.0);
+
     }
-    else if (chanMsg->getErrorFlag() == false){
+    else {
 //        EV << "Packet record is error free!\n";
         errorFlagCollection.collect(0.0);
         errorFlagStats.record(0.0);
-        EV << "Oh god oh shit oh fuck";
+
     }
+
 
     Q = errorFlagCollection.getMean();
     goodput = ((1-Q) * chanMsg->getUserBits())/(chanMsg->getUserBits() + chanMsg->getOvhdBits());
+    goodputStats.record(0.0);
     //goodputStats.record(goodput);
     EV << "Current mean: " << Q << "\n";
-//    EV << "Current goodput: " << goodput << "\n";
+    EV << "Current goodput: " << goodput << "\n";
     delete chanMsg;
 
 }
