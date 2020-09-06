@@ -29,10 +29,9 @@ public:
 private:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg);
+    virtual void finish() override;
 
     cStdDev errorFlagCollection;
-    cOutVector errorFlagStats;
-    cOutVector goodputStats;
     double Q;
     double goodput;
 };
@@ -44,7 +43,6 @@ void Receiver_cc::initialize()
     //Initialises receiver at start of simulation
 //    EV << "Initialising Receiver!\n";
     errorFlagCollection.setName("Packet Loss rate Q");
-    goodputStats.setName("Goodput");
 }
 
 void Receiver_cc::handleMessage(cMessage *msg)
@@ -55,23 +53,28 @@ void Receiver_cc::handleMessage(cMessage *msg)
     if (chanMsg->getErrorFlag() == true){
 //        EV << "Packet record contains error!\n";
         errorFlagCollection.collect(1.0);
-        errorFlagStats.record(1.0);
 
     }
     else {
 //        EV << "Packet record is error free!\n";
         errorFlagCollection.collect(0.0);
-        errorFlagStats.record(0.0);
 
     }
 
 
     Q = errorFlagCollection.getMean();
     goodput = ((1-Q) * chanMsg->getUserBits())/(chanMsg->getUserBits() + chanMsg->getOvhdBits());
-    goodputStats.record(0.0);
+
+
     //goodputStats.record(goodput);
     EV << "Current mean: " << Q << "\n";
     EV << "Current goodput: " << goodput << "\n";
     delete chanMsg;
 
+}
+
+void Receiver_cc::finish()
+{
+    recordScalar("Average packet loss rate Q", Q);
+    recordScalar("Goodput", goodput);
 }

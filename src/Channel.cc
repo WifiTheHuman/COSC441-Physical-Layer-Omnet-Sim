@@ -22,8 +22,6 @@
 #include <time.h>
 #include <cmath>
 #include <math.h>
-//#include <ccomponent.h>
-//#include <crng.h>
 
 class Channel : public cSimpleModule
 {
@@ -98,7 +96,7 @@ void Channel_cc::initialize()
 void Channel_cc::determineChanState() {
     /////////////////////////////////////
     //Determines next channel state from current state
-    tempRand = uniform(0.0, 1.0, 0);
+    tempRand = uniform(0.0, 1.0);
     if (chanGood == true) {
         if(tempRand < transProbGoodGood){
             nextChanGood = true;
@@ -200,7 +198,7 @@ void Channel_cc::handleMessage(cMessage *msg)
             BER = BERBad;
         }
         //This section determines if the channel introduces errors
-        tempRand = uniform(0.0, 1.0, 0);
+        tempRand = uniform(0.0, 1.0);
 
 //        EV<<"temprand = "<<tempRand<<"\n";
 
@@ -219,8 +217,8 @@ void Channel_cc::handleMessage(cMessage *msg)
     //This section determines state of channel:
 //    EV<<"Error flag state: "<<chanMsg->getErrorFlag()<<"\n";
 
-    send(chanMsg, "out");
+    sendDelayed(chanMsg, (double)packetSize/bitRate, "out");
 
     cMessage *requestMsg = new cMessage();
-    send(requestMsg, "requestOut");
+    sendDelayed(requestMsg, (double)packetSize/bitRate, "requestOut");
 }

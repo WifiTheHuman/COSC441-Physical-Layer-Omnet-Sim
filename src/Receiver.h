@@ -29,10 +29,9 @@ class Receiver_cc : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void finish();
   private:
     cStdDev errorFlagCollection;
-    cOutVector errorFlagStats;
-    cOutVector goodputStats;
     double Q;
     double goodput;
 };
